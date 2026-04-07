@@ -72,6 +72,7 @@ exports.updateBooking = async (req, res) => {
         // Update booking
         booking.startTime = startTime;
         booking.endTime = endTime;
+        booking.expiresAt = endTime;
         await booking.save();
 
         // Real-time notification
