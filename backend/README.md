@@ -405,11 +405,19 @@ curl -X GET http://localhost:5000/api/bookings \
 ```json
 [
     {
-        "_id": "booking123",
-        "roomId": "room123",
-        "userId": "user1",
-        "startTime": "2026-03-24T09:00:00.000Z",
-        "endTime": "2026-03-24T12:00:00.000Z"
+        "_id": "69d52597b776b7cb87849d0c",
+        "roomId": {
+            "_id": "69d52334b776b7cb87849cfa",
+            "name": "Workspace 1"
+        },
+        "userId": {
+            "_id": "69d521d6b776b7cb87849cf5",
+            "username": "admin"
+        },
+        "startTime": "2026-04-24T09:00:00.000Z",
+        "endTime": "2026-04-24T12:00:00.000Z",
+        "expiresAt": "2026-04-24T12:00:00.000Z",
+        "__v": 0
     }
 ]
 ```
@@ -486,7 +494,8 @@ curl -X POST http://localhost:5000/api/bookings/booking123 \
         "roomId": "room123",
         "userId": "user1",
         "startTime": "2026-03-24T10:00:00.000Z",
-        "endTime": "2026-03-24T13:00:00.000Z"
+        "endTime": "2026-03-24T13:00:00.000Z",
+        "expiresAt": "2026-04-24T12:00:00.000Z"
     }
 ]
 ```
