@@ -77,7 +77,15 @@ export default function MyBookings() {
     };
 
     if (!auth?.token) return <p>Please log in to see your bookings</p>;
-    if (loading) return <p>Loading...</p>
+
+    if (loading) { 
+        return ( 
+            <div className="fixed inset-0 flex items-center justify-center bg-darkBg text-white">
+                <p className="text-xl font-display animate-pulse">Loading...</p>;
+            </div> 
+        ); 
+    }
+   
     if (error) return <p>{error}</p>
 
     return (
