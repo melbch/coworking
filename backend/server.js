@@ -18,7 +18,10 @@ const server = http.createServer(app);
 connectDB();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: "https://coworking-frontend-6vjn.onrender.com",
+    credentials: true
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
