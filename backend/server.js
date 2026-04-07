@@ -14,20 +14,32 @@ const userRoutes = require('./routes/users');
 const app = express();
 const server = http.createServer(app);
 
+const allowedOrigins = [
+  'https://coworking-frontend-6vjn.onrender.com',
+];
+
+
 // Connect to database
 connectDB();
 
 // Middleware
 app.use(cors({
-    origin: "https://coworking-frontend-6vjn.onrender.com",
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'], 
+    origin: function(origin, callback) {
+        if(!origin) return callback(null, true); // Postman / curl / server-side requests
+        if(allowedOrigins.includes(origin)) return callback(null, true);
+        callback(new Error('Not allowed by CORS'));
+    },
+    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type','Authorization'],
+    credentials: true
 }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send('API is running');
 })
+
+app.options('*', cors());
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -36,7 +48,11 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/users', userRoutes);
 
 const io = new Server(server, {
-    cors: { origin: "*" }
+    cors: { 
+        origin: "https://coworking-frontend-6vjn.onrender.com",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
 });
 
 app.set('io', io);
