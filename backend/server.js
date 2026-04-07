@@ -46,6 +46,8 @@ io.on("connection", (socket) => {
 });
 
 const PORT = process.env.PORT || 5000;
+console.log("Trying to start server...");
+console.log("PORT =", PORT);
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports.io = io;
