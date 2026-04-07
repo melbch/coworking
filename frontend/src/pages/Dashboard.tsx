@@ -34,7 +34,7 @@ export default function Dashboard() {
         if (!auth?.token) return;
 
         try {
-            await fetch("http://localhost:5000/api/users/me", {
+            await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${auth.token}`,

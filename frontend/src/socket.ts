@@ -1,6 +1,6 @@
 import { io, type Socket } from "socket.io-client";
 
-const socket: Socket = io("http://localhost:5000", {
+const socket: Socket = io(import.meta.env.VITE_API_URL, {
     autoConnect: true,
     reconnection: true,
     reconnectionAttempts: 5,

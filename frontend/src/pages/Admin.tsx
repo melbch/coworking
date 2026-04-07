@@ -48,8 +48,8 @@ export default function Admin() {
     const fetchUsers = useCallback(async () => {
         if (!auth?.token) return;
 
-        try {
-            const res = await fetch("http://localhost:5000/api/users", {
+        try { 
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users`, {
                 headers: {
                     Authorization: `Bearer ${auth.token}`,
                 },
@@ -109,7 +109,7 @@ export default function Admin() {
         }
         
         try {
-            const res = await fetch(`http://localhost:5000/api/users/${userId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${auth.token}`,
