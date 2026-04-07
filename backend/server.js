@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -14,42 +13,27 @@ const userRoutes = require('./routes/users');
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = [
-  'https://coworking-frontend-6vjn.onrender.com',
-];
-
+const FRONTEND_URL = 'https://coworking-frontend-6vjn.onrender.com';
 
 // Connect to database
 connectDB();
 
-// Middleware
-app.use(cors({
-    origin: function(origin, callback) {
-        if(!origin) return callback(null, true); // Postman / curl / server-side requests
-        if(allowedOrigins.includes(origin)) return callback(null, true);
-        callback(new Error('Not allowed by CORS'));
-    },
-    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-    allowedHeaders: ['Content-Type','Authorization'],
-    credentials: true
-}));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('API is running');
-})
-
+// Middleware
 app.use((req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Origin', 'https://coworking-frontend-6vjn.onrender.com');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    return res.sendStatus(200);
-  }
+  res.header('Access-Control-Allow-Origin', FRONTEND_URL);
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
 
 // Routes
+app.get('/', (req, res) => {
+    res.send('API is running');
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/bookings', bookingRoutes);
@@ -57,8 +41,8 @@ app.use('/api/users', userRoutes);
 
 const io = new Server(server, {
     cors: { 
-        origin: "https://coworking-frontend-6vjn.onrender.com",
-        methods: ["GET", "POST"],
+        origin: FRONTEND_URL,
+        methods: ['GET', 'POST'],
         credentials: true
     }
 });
@@ -67,7 +51,6 @@ app.set('io', io);
 
 io.on("connection", (socket) => {
     console.log("Socket connected:", socket.id);
-    
     socket.on("disconnect", () => {
         console.log("Socket disconnected:", socket.id);
     });
