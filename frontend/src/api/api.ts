@@ -1,6 +1,6 @@
 import type { Booking } from "../types";
 
-const API_URL = import.meta.env.VITE_API_URL + "/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const register = async (data: {
     username: string;
