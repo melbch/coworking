@@ -27,7 +27,7 @@ This project is a backend system for a coworking space booking platform. It allo
 
 ```bash
 git clone <my-repo-url>
-cd <project-folder>
+cd <project-folder>/backend
 ```
 
 2. **Install dependencies:**
@@ -36,7 +36,7 @@ cd <project-folder>
 npm install
 ```
 
-3. **Create a `.env` file** in the root folder:
+3. **Create a `.env` file** in the backend folder:
 
 ```env
 MONGO_URI=<my-mongodb-connection-string>
@@ -45,7 +45,7 @@ PORT=5000
 REDIS_URL=redis://localhost:6379
 ```
 
-4. **Start Redis** (via Docker):
+4. **Start Redis** (for local development, via Docker):
 
 ```bash
 docker run -p 6379:6379 redis
@@ -53,15 +53,17 @@ docker run -p 6379:6379 redis
 
 5. **Start the server:**
 
-- Using Node.js (standard):
+- Using Node.js (standard, production mode):
 ```bash
 node server.js
 ```
 
-- Using Nodemon (development mode, auto-restart on changes):
+- Using Nodemon (development mode):
 ```bash
 npm run dev
 ```
+
+> Note: The development mode (`npm run dev`) uses Nodemon, which restarts the server automatically on code changes.
 
 > Note: Make sure you have installed nodemon globally (`npm install -g nodemon`) or that it is included in your local npm scripts.
 
