@@ -137,7 +137,7 @@ export default function Admin() {
     if (loading) { 
         return ( 
             <div className="fixed inset-0 flex items-center justify-center bg-darkBg text-white">
-                <p className="text-xl font-display animate-pulse">Loading...</p>;
+                <p className="text-xl font-display animate-pulse">Loading...</p>
             </div> 
         ); 
     }
