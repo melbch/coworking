@@ -26,8 +26,8 @@ This project is a backend system for a coworking space booking platform. It allo
 1. **Clone the repository:**
 
 ```bash
-git clone <my-repo-url>
-cd <project-folder>/backend
+git clone https://github.com/melbch/coworking
+cd coworking/backend
 ```
 
 2. **Install dependencies:**
@@ -202,11 +202,13 @@ curl -X GET http://localhost:5000/api/users \
         "_id": "6425d3f1a1234567890abcde",
         "username": "admin1",
         "role": "Admin",
+        "__v": 0
     },
     {
         "_id": "6425d3f1a1234567890abcde",
         "username": "user1",
         "role": "User",
+        "__v": 0
     }
 ]
 ```
@@ -280,7 +282,15 @@ curl -X GET http://localhost:5000/api/rooms \
         "_id": "room123",
         "name": "Conference Room 1",
         "capacity": 6,
-        "type": "conference"
+        "type": "conference",
+        "__v": 0
+    },
+    {
+        "_id": "room456",
+        "name": "Workspace 1",
+        "capacity": 4,
+        "type": "conference",
+        "__v": 0
     }
 ]
 ```
@@ -315,10 +325,11 @@ curl -X POST http://localhost:5000/api/rooms \
 ```json
 [
     {
-        "_id": "room456",
         "name": "Workspace 1",
         "capacity": 4,
-        "type": "workspace"
+        "type": "workspace",
+        "_id": "room456",
+        "__v": 0
     }
 ]
 ```
@@ -333,7 +344,7 @@ curl -X POST http://localhost:5000/api/rooms \
 
 ```json
 {
-    "name": "Updated Room Name"
+    "capacity": "Updated Room Name"
 }
 ```
 
@@ -351,10 +362,11 @@ curl -X PUT http://localhost:5000/api/rooms/room456 \
 ```json
 [
     {
-        "_id": "room456",
-        "name": "Updated Room Name",
+        "_id": "69d57ffbef1e8ab462042697",
+        "name": "New Updated Room Name",
         "capacity": 4,
-        "type": "workspace"
+        "type": "workspace",
+        "__v": 0
     }
 ]
 ```
@@ -452,11 +464,13 @@ curl -X POST http://localhost:5000/api/bookings \
 ```json
 [
     {
-        "_id": "booking123",
         "roomId": "room123",
         "userId": "user1",
         "startTime": "2026-03-24T09:00:00.000Z",
-        "endTime": "2026-03-24T12:00:00.000Z"
+        "endTime": "2026-03-24T12:00:00.000Z",
+        "expiresAt": "2026-03-24T12:00:00.000Z",
+        "_id": "booking123",
+        "__v": 0
     }
 ]
 ```
@@ -495,7 +509,8 @@ curl -X POST http://localhost:5000/api/bookings/booking123 \
         "userId": "user1",
         "startTime": "2026-03-24T10:00:00.000Z",
         "endTime": "2026-03-24T13:00:00.000Z",
-        "expiresAt": "2026-04-24T12:00:00.000Z"
+        "expiresAt": "2026-03-24T13:00:00.000Z",
+        "__v": 0
     }
 ]
 ```
@@ -547,6 +562,10 @@ Example message:
 
 ## 📌 Notes
 
+- **Local vs Deployed URLs:**
+API examples use the `http://localhost:5000` for local development.
+When using the deployed version, replace it with your backend URL. 
+
 - **Authentication:**
 All protected routes require a JWT token. Include it in the request header as: `Authorization: Bearer <your_token_here>`
 
@@ -584,4 +603,16 @@ API endpoints can be tested using Postman or curl (see examples above).
 
 ## 🏁 Deployment
 
-- The backend can be deployed to Heroku or any cloud provider supporting Node.js.
+The application is deployed and available online:
+- Frontend: https://coworking-frontend-6vjn.onrender.com
+- Backend: https://coworking-k2kw.onrender.com
+
+### Database and cache
+- **MongoDB Atlas:** used as a database for users, rooms and bookings.
+- **Upstash Redis:** used for caching for often requested data (rooms) and to optimize performance.
+
+### Real-time notification
+- WebSocket server runs through the backend on Render with Socket.io
+- Frontend subscribes to events for bookingCreated, bookingUpdated and bookingDeleted to uppdate the UI in real-time.
+
+> Note: If you want to run the project locally, see the ⚡ Installation & Setup (Local) section above.
