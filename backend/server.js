@@ -13,7 +13,7 @@ const userRoutes = require('./routes/users');
 const app = express();
 const server = http.createServer(app);
 
-const FRONTEND_URL = 'https://coworking-frontend-6vjn.onrender.com';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';
 
 // Connect to database
 connectDB();
