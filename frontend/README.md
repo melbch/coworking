@@ -71,3 +71,35 @@ export default defineConfig([
   },
 ])
 ```
+
+# Screenshots 📸
+
+## Dashboard
+
+### Admin Dashboard View
+![Admin Dashboard Overview 1](images/admin-dashboard-overview-1.png)
+
+![Admin Dashboard Overview 2](images/admin-dashboard-overview-2.png)
+
+### User Dashboard View
+![User Dashboard Overview 1](images/user-dashboard-overview-1.png)
+
+![User Dashboard Overview 2](images/user-dashboard-overview-2.png)
+
+## Bookings Page
+
+> Admins can view all bookings, while regular users can only view their own bookings.
+
+### Active Bookings
+![Booking Active](images/booking-page-active-booking.png)
+
+### No Active Bookings
+![Booking Empty](images/booking-page-no-booking.png)
+
+## Admin Panel
+
+### Create Room
+![Admin Create Room](images/admin-create-room.png)
+
+### Manage Rooms and Users
+![Admin Manage Rooms and Users](images/admin-manage-users-rooms.png)
